@@ -7,7 +7,7 @@ Welcome to our sample project for the **AI Sprint 2025**\! This application is a
 This project relies on Firebase Real Time database and Firebase AI.
 to generate all the necessary file for the project (Not included in this repo) you need:
 
-- a Valid firebase Project, you can create from your [Firebase console](https://console.firebase.google.com/)
+- A valid firebase Project, you can create from your [Firebase console](https://console.firebase.google.com/)
 - Enable Firebase realtime database
 - Enable Firebase AI Logic
 
