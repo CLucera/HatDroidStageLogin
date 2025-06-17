@@ -1,0 +1,63 @@
+# See https://www.gitignore.io/api/flutter for a start.
+#
+# NOTE: The .gitignore file should be placed in the root of your project.
+#
+# Add ignored files here.
+
+.DS_Store
+.flutter-plugins
+.flutter-plugins-dependencies
+.ios/config
+.venv/
+/build
+/ios/.symlinks
+/ios/Flutter/flutter_assets
+/android/.gradle
+/android/captures
+/android/gradlew
+/android/gradlew.bat
+/android/local.properties
+/android/**/.idea
+/android/**/.iml
+/android/**/.flutter-plugins
+/android/**/.flutter-plugins-dependencies
+/android/**/.keep
+/android/**/generated_plugins_registrant.cc
+/ios/.generated
+/macos/.generated
+/windows/.generated
+/linux/.generated
+/web/.generated
+
+# It is strongly recommended to ignore the `.packages` file, since it can be
+# regenerated based on the `pubspec.yaml` and `pubspec.lock` files.
+.packages
+
+# Ignore the `.flutter-plugins` and `.flutter-plugins-dependencies` files which
+# contain the list of plugin dependencies in the project.
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Ignore the `.vscode/launch.json` file, which contains IDE-specific launch
+# configurations.
+.vscode/launch.json
+
+# Ignore the `.idea` folder, which contains IDE-specific settings.
+.idea
+
+# Ignore the `.dart_tool` folder, which contains Dart tooling artifacts.
+.dart_tool
+
+# Ignore the `coverage` folder, which contains test coverage reports.
+coverage
+
+# Ignore generated Android and iOS files
+
+# Generated file, do not commit
+lib/generated_plugin_registrant.dart
+
+# Generated file, do not commit
+lib/generated_plugins_registration.dart
+
+# Generated file, do not commit
+lib/firebase_options.dart
