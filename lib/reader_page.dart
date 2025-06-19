@@ -8,7 +8,7 @@ import 'package:image/image.dart' as img;
 class ReaderPage extends StatefulWidget {
   final String roomId;
 
-  const ReaderPage({Key? key, required this.roomId}) : super(key: key);
+  const ReaderPage({super.key, required this.roomId});
 
   @override
   _ReaderPageState createState() => _ReaderPageState();
@@ -17,6 +17,9 @@ class ReaderPage extends StatefulWidget {
 class _ReaderPageState extends State<ReaderPage> {
   final TextEditingController _nicknameController = TextEditingController();
   late DatabaseReference _roomRef;
+
+  bool loading = false;
+  String? error;
 
   @override
   void initState() {
@@ -35,19 +38,28 @@ class _ReaderPageState extends State<ReaderPage> {
   }
 
   void _addNickname() async {
+    if (loading) {
+      return;
+    }
+    setState(() => loading = true);
     final username = _nicknameController.text.trim();
     if (username.isNotEmpty) {
       try {
         final avatar = await _generateImage(username);
         final ref = _roomRef.push();
         await ref.set({'username': username, 'avatar': avatar});
-        if (context.mounted) {
+        if (mounted) {
           context.go('/joined/${widget.roomId}/${ref.key}');
         }
       } catch (e) {
         print('Error adding nickname: $e');
       }
+    } else {
+      setState(() {
+        error = 'Please enter a nickname';
+      });
     }
+    setState(() => loading = false);
   }
 
   @override
@@ -56,21 +68,33 @@ class _ReaderPageState extends State<ReaderPage> {
       appBar: AppBar(title: const Text('Enter Nickname')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _nicknameController,
-              decoration: const InputDecoration(
-                labelText: 'Enter your nickname',
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _addNickname,
-              child: const Text('Join Room'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:
+                loading
+                    ? [
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 20),
+                      const Text('Generating User...'),
+                    ]
+                    : [
+                      TextField(
+                        controller: _nicknameController,
+                        decoration: InputDecoration(
+                          labelText: 'Enter your nickname',
+                          errorText: error,
+                        ),
+                        onChanged: (value) => setState(() => error = null),
+                        onSubmitted: (_) => _addNickname(),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _addNickname,
+                        child: const Text('Join Room'),
+                      ),
+                    ],
+          ),
         ),
       ),
     );
